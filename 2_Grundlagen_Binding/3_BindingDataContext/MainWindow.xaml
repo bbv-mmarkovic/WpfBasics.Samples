@@ -1,0 +1,55 @@
+﻿<Window x:Class="BindingDataContext.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BindingDataContext"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="350" Width="525">
+    <Grid d:DataContext="{d:DesignInstance local:ComplexViewModel}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        
+        <TextBox Text="{Binding SimplyText}" />
+        
+        <ItemsControl ItemsSource="{Binding Parts}" Grid.Row="1">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <!-- Since the following Panel is actually the one which will get the Items (each "PartViewModel" represented as described in the DataTemplate)
+                        The Shared size scope may be set on it.
+                    -->
+                    <StackPanel Orientation="Vertical" Grid.IsSharedSizeScope="True" />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            
+            <ItemsControl.ItemTemplate>
+                <!-- 
+                    At this level we do not directly get access to the ComplexViewModel!
+                    since we set the ItemSource to a collection of "PartViewModel"
+                    each item in the PartViewModel-Collection will be rendered by using the following DataTemplate and giving the corresponding PartViewModel as DataContext!
+                
+                    Pseudo C#-Code:
+                
+                    foreach(var dataContext in PartViewModel-Collection)
+                    {
+                        var renderedItem = WpfFramework.Render(dataTemplate, dataContext);
+                        itemsPanel.Items.Add(renderedItem); // since we have a StackPanel as ItemsPanel, the item will be added into that StackPanel!
+                    }
+                -->
+                <DataTemplate DataType="local:PartViewModel">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" SharedSizeGroup="groupOne" />
+                            <ColumnDefinition Width="Auto" SharedSizeGroup="groupTwo" />
+                        </Grid.ColumnDefinitions>
+                        
+                        <TextBlock Text="{Binding PropOne}" Background="LightSalmon" />
+                        <TextBlock Text="{Binding PropTwo}" Background="LightSlateGray" Grid.Column="1" />
+                    </Grid>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+    </Grid>
+</Window>

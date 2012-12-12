@@ -1,0 +1,77 @@
+﻿<Window x:Class="ElementDataTemplateBinding.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MainWindow" Height="350" Width="525"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ElementDataTemplateBinding"
+        mc:Ignorable="d" >
+
+    <Grid d:DataContext="{d:DesignInstance local:MyViewModel}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        
+        <!-- The DataContext will be set by the CodeBehind to an "MyViewModel" instance. The "DesignInstance" declared in the Grid is only for Designer support! -->
+        
+        <!-- A simple Binding on a Property of the DataContext (MyViewModel) using the constructor syntax:
+            new Binding("Text")
+        -->
+        <TextBlock Grid.Row="0" Grid.Column="0" Text="Simple Binding 1:" />
+        <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Text}" x:Name="TextBox1" />
+
+        <!-- The same Binding as aboth, but using object initializer instead of constructor syntax:
+            new Binding() { Path = "Text" }
+        -->
+        <TextBlock Grid.Row="1" Grid.Column="0" Text="Simple Binding 2:" />
+        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Path=Text}" x:Name="TextBox2" />
+
+        <!-- The next Binding uses UI-References to resolve it's source. The following TextBox will Bind to the Property "Text"
+            (on the UI-Element "TextBox" and actually not the DataContext!) of the TextBox with Name: "TextBox2". -->
+        <TextBlock Grid.Row="2" Grid.Column="0" Text="ElementBinding:" />
+        <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding ElementName=TextBox2, Path=Text}" x:Name="TextBox3" />
+
+        <!-- Following sample demonstrates the "Visual-Tree"-Walking.
+        The Binding will cause a Tree-Walk to find the next UI-Element in Direction "Parent", which is Type of Grid.
+        On that UI Element, we will bind to the Path: "DataContext.Text", which means the same DataContext and the same property on that DataContext.
+        -->
+        <TextBlock Grid.Row="3" Grid.Column="0" Text="RelativeSource Binding:" />
+        <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Grid, AncestorLevel=1}, Path=DataContext.Text}" x:Name="TextBox4" />
+
+
+        <!-- TemplateBinding: -->
+        <TextBlock Grid.Row="4" Grid.Column="0" Text="TemplateBinding:" />
+        <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding Text}" BorderThickness="2" x:Name="TextBox5">
+            <TextBox.Template>
+                <ControlTemplate TargetType="TextBox">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        
+                        <!-- The TemplateBinding usually binds a property of an UI element inside the ControlTemplate to the property of the templated parent. -->
+                        <TextBox Grid.Column="0" Text="{TemplateBinding Text}" />
+
+                        <!-- But we may miss use it for freaky things (use the "BorderThickness" as Content for a Button): -->
+                        <Button Grid.Column="1" Content="{TemplateBinding BorderThickness}" />
+                        
+                        <!-- We may also use the "normal" DataBinding, since we inherit the DataContext! -->
+                        <TextBox Grid.Column="2" Text="{Binding Text}" />
+                    </Grid>
+                </ControlTemplate>
+            </TextBox.Template>
+            
+        </TextBox>
+
+    </Grid>
+</Window>

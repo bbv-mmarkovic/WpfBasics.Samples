@@ -1,0 +1,45 @@
+﻿<Window x:Class="MarkupSyntax.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MarkupSyntax"
+        mc:Ignorable="d"
+        xmlns:system="clr-namespace:System;assembly=mscorlib"
+        
+        Title="MainWindow" Height="350" Width="525">
+    <Window.Resources>
+        <system:String x:Key="SampleString">Hallo Welt!</system:String>
+        <local:RtlTextConverter x:Key="RtlConverter" />
+    </Window.Resources>
+    
+    <Grid d:DataContext="{d:DesignInstance local:MyViewModel}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        
+        <!-- "Constructor" syntax: new StaticResource("SampleString") -->
+        <TextBlock Grid.Row="0" Grid.Column="0" Text="Simple Markup 1:" />
+        <TextBox Grid.Row="0" Grid.Column="1" Text="{StaticResource SampleString}" />
+
+        <!-- "Object-initializer" syntax: new StaticResource() { ResourceKey="SampleString" } -->
+        <TextBlock Grid.Row="1" Grid.Column="0" Text="Simple Markup 1:" />
+        <TextBox Grid.Row="1" Grid.Column="1" Text="{StaticResource ResourceKey=SampleString}" />
+
+        <!-- "Constructor" syntax: new Binding("Text")  -->
+        <TextBlock Grid.Row="2" Grid.Column="0" Text="Simple Binding 1:" />
+        <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Text}" />
+        
+        <!-- "Constructor" syntax: new Binding() {Path = "Text", Converter=.. }  -->
+        <TextBlock Grid.Row="3" Grid.Column="0" Text="Simple Binding 2:" />
+        <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Path=Text, Converter={StaticResource RtlConverter}}" />
+    </Grid>
+</Window>

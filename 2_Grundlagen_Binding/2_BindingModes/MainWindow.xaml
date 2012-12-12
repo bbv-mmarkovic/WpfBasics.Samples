@@ -1,0 +1,40 @@
+﻿<Window x:Class="BindingModes.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MainWindow" Height="350" Width="525"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:bindingModes="clr-namespace:BindingModes"
+        mc:Ignorable="d" >
+
+    <Grid d:DataContext="{d:DesignInstance bindingModes:IMyViewModel}" >
+        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        
+        <TextBlock Grid.Row="0" Grid.Column="0" Text="Default Binding:" />
+        <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Text, Mode=Default}" />
+
+        <TextBlock Grid.Row="1" Grid.Column="0" Text="OneTime Binding:" />
+        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Text, Mode=OneTime}" />
+
+        <TextBlock Grid.Row="2" Grid.Column="0" Text="OneWay Binding:" />
+        <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Text, Mode=OneWay}" />
+
+        <TextBlock Grid.Row="3" Grid.Column="0" Text="OneWayToSource Binding:" />
+        <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Text, Mode=OneWayToSource}" />
+
+        <TextBlock Grid.Row="4" Grid.Column="0" Text="TwoWay Binding:" />
+        <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding Text, Mode=TwoWay}" />
+        
+    </Grid>
+</Window>

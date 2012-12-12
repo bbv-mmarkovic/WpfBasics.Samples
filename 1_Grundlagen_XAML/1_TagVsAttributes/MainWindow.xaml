@@ -1,0 +1,31 @@
+﻿<Window x:Class="TagVsAttributes.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MainWindow" Height="350" Width="525">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        
+        <Button 
+            Name="AttributeButton"
+            Grid.Column="0"
+            
+            Content="Hallo Welt!"
+            Background="LightBlue"
+            BorderBrush="DarkBlue"
+            BorderThickness="2"
+            />
+        
+        <Button>
+            <Button.Name>TagButton</Button.Name>
+            <Grid.Column>1</Grid.Column>
+            
+            <Button.Content>Hallo Welt!</Button.Content>
+            <Button.Background>LightBlue</Button.Background>
+            <Button.BorderBrush>DarkBlue</Button.BorderBrush>
+            <Button.BorderThickness>2</Button.BorderThickness>
+        </Button>
+    </Grid>
+</Window>
