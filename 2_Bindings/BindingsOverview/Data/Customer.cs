@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="MainWindow.xaml.cs" company="bbv Software Services AG">
+// <copyright file="Customer.cs" company="bbv Software Services AG">
 //   Copyright (c) 2014
 //   Licensed under the Apache License, Version 2.0 (the "License");
 //   you may not use this file except in compliance with the License.
@@ -13,31 +13,18 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace BindingsOverview
+namespace BindingsOverview.Data
 {
-    using System.Windows;
-
-    using BindingsOverview.Data;
-
-    public partial class MainWindow : Window
+    public class Customer
     {
-        public MainWindow()
-        {
-            this.InitializeComponent();
-        }
+        public int Id { get; set; }
 
-        private void MainWindow_OnLoaded(object sender, RoutedEventArgs e)
-        {
-            var customer1 = new Customer
-            {
-                Id = 15,
-                Username = "Nobster",
-                FirstName = "Marco",
-                LastName = "Beyer",
-                Phone = "044 343 70 36"
-            };
+        public string Username { get; set; }
 
-            this.DataContext = customer1;
-        }
+        public string FirstName { get; set; }
+
+        public string LastName { get; set; }
+
+        public string Phone { get; set; }
     }
 }
