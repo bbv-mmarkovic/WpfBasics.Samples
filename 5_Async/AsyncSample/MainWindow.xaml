@@ -1,0 +1,41 @@
+﻿<Window x:Class="AsyncSample.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:asyncSample="clr-namespace:AsyncSample"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        Title="MainWindow"
+        Width="525"
+        Height="350"
+        d:DataContext="{d:DesignInstance d:Type=asyncSample:MainViewModel}"
+        mc:Ignorable="d">
+    <Window.Resources>
+        <Style TargetType="Button">
+            <Setter Property="Margin" Value="10" />
+        </Style>
+        <Style TargetType="TextBlock">
+            <Setter Property="Margin" Value="10" />
+        </Style>
+    </Window.Resources>
+    <Window.DataContext>
+        <asyncSample:MainViewModel />
+    </Window.DataContext>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <GroupBox Header="Sync">
+            <WrapPanel>
+                <Button Command="{Binding SyncCommand}" Content="Show Time" />
+                <TextBlock Text="{Binding SyncContent}" />
+            </WrapPanel>
+        </GroupBox>
+        <GroupBox Grid.Row="1" Header="Async">
+            <WrapPanel>
+                <Button Command="{Binding AsyncCommand}" Content="Show Time" />
+                <TextBlock Text="{Binding AsyncContent}" />
+            </WrapPanel>
+        </GroupBox>
+    </Grid>
+</Window>
